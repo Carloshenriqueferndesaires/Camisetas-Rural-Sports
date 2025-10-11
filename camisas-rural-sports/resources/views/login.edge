@@ -11,6 +11,11 @@
       font-family: 'Roboto', sans-serif;
       background-color: #0f0c25;
       color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
     }
 
     a {
@@ -20,70 +25,85 @@
 
     #login {
       text-align: center;
+      display: flex;
       justify-content: center;
       align-items: center;
-      display: flex;
-      flex-direction: row;
+      flex-direction: column;
+    }
+
+    .caixa {
+      margin-top: 0;
+      padding: 30px 40px;
+      background-color: #14122b;
+      border-radius: 20px;
+      box-shadow: 0 0 15px rgba(0, 255, 191, 0.08);
+    }
+
+    .caixa img {
+      width: 130px;        /* imagem menor */
+      margin-bottom: 5px;  /* menos espaço abaixo da imagem */
+    }
+
+    h1 {
+      color: #FAFAFA;
+      margin-top: 5px;
+      margin-bottom: 15px;
     }
 
     .email input,
     .senha input {
       border-radius: 15px;
       border: none;
-      width: 250px;
-      height: 40px;
+      width: 260px;
+      height: 38px;
       padding-left: 15px;
       background-color: #1e1c2e;
       color: #b6b6b6;
-      margin-top: 15px;
-    }
-
-    .entrar {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-top: 20px;
-    }
-
-    .entrar input {
-      cursor: pointer;
-      width: 200px;
-      height: 45px;
-      border-radius: 25px;
-      border: none;
-      background-color: rgb(0, 255, 191);
-      color: #141414;
-      font-weight: bold;
-      margin-top: 10px;
+      margin-top: 10px;  /* espaço menor entre os campos */
     }
 
     input::placeholder {
       color: #b6b6b6;
     }
 
-    h1 {
-      color: #FAFAFA;
+    .entrar {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 15px; /* aproxima o botão dos campos */
     }
 
-    .caixa {
-      margin-top: 65px;
+    .entrar input {
+      cursor: pointer;
+      width: 200px;
+      height: 42px;
+      border-radius: 25px;
+      border: none;
+      background-color: rgb(0, 255, 191);
+      color: #141414;
+      font-weight: bold;
+      margin-top: 10px;
+      transition: 0.3s;
     }
 
-    .caixa img {
-      width: 180px;
-      margin-bottom: 3px;
+    .entrar input:hover {
+      background-color: rgb(0, 230, 170);
+      transform: scale(1.03);
     }
 
-    
+    p {
+      margin: 0;
+      margin-bottom: 10px;
+      color: #ccc;
+      font-size: 14px;
+    }
   </style>
 </head>
 
 <body>
   <div id="login">
     <div class="caixa">
-      
       <img src="public/imagem/logo.png" alt="Logo do site">
-
       <h1>Login</h1>
 
       <form method="POST" action="/login">
