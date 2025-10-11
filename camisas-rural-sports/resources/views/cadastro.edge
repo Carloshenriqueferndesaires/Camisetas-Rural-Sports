@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <title>Cadastro</title>
+
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #0f0c25;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    a {
+      text-decoration: none;
+      color: aquamarine;
+    }
+
+    #cadastro {
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .caixa {
+      margin-top: 0;
+      padding: 30px 40px;
+      background-color: #14122b;
+      border-radius: 20px;
+      box-shadow: 0 0 15px rgba(0, 255, 191, 0.08);
+    }
+
+    .caixa img {
+      width: 130px;
+      margin-bottom: 5px;
+    }
+
+    h1 {
+      color: #FAFAFA;
+      margin-top: 5px;
+      margin-bottom: 15px;
+    }
+
+    .input-field input {
+      border-radius: 15px;
+      border: none;
+      width: 260px;
+      height: 38px;
+      padding-left: 15px;
+      background-color: #1e1c2e;
+      color: #b6b6b6;
+      margin-top: 10px;
+    }
+
+    input::placeholder {
+      color: #b6b6b6;
+    }
+
+    .entrar {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 15px;
+    }
+
+    .entrar input {
+      cursor: pointer;
+      width: 200px;
+      height: 42px;
+      border-radius: 25px;
+      border: none;
+      background-color: rgb(0, 255, 191);
+      color: #141414;
+      font-weight: bold;
+      margin-top: 10px;
+      transition: 0.3s;
+    }
+
+    .entrar input:hover {
+      background-color: rgb(0, 230, 170);
+      transform: scale(1.03);
+    }
+
+    p {
+      margin: 0;
+      margin-bottom: 10px;
+      color: #ccc;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="cadastro">
+    <div class="caixa">
+      <img src="public/imagem/logo.png" alt="Logo do site">
+      <h1>Criar Conta</h1>
+
+      <form method="POST" action="/cadastro">
+        <div class="input-field">
+          <input type="text" name="name" placeholder="Nome completo" value="{{ name ?? '' }}" required>
+        </div>
+
+        <div class="input-field">
+          <input type="email" name="email" placeholder="Email" value="{{ email ?? '' }}" required>
+        </div>
+
+        <div class="input-field">
+          <input type="password" name="password" placeholder="Senha" required>
+        </div>
+
+        <div class="input-field">
+          <input type="password" name="confirm_password" placeholder="Confirmar senha" required>
+        </div>
+
+        <div class="entrar">
+          <p>
+            Já tem uma conta?
+            <a href="/login">Faça login.</a>
+          </p>
+          <input type="submit" value="Cadastrar">
+        </div>
+      </form>
+
+      @if(error)
+        <p style="color: red; margin-top: 10px;">{{ error }}</p>
+      @endif
+    </div>
+  </div>
+</body>
+</html>
