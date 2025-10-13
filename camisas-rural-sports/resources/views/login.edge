@@ -97,22 +97,28 @@
       color: #ccc;
       font-size: 14px;
     }
+
+    .message {
+      margin-top: 10px;
+      font-size: 14px;
+    }
   </style>
 </head>
 
 <body>
   <div id="login">
     <div class="caixa">
-      <img src="public/imagem/logo.png" alt="Logo do site">
+      <img src="/public/imagem/logo.png" alt="Logo do site">
       <h1>Login</h1>
 
       <form method="POST" action="/login">
+        
         <div class="email">
-          <input type="email" name="email" placeholder="Email" value="{{ email ?? '' }}">
+          <input type="email" name="email" placeholder="Email" value="{{ email ?? '' }}" required>
         </div>
 
         <div class="senha">
-          <input type="password" name="password" placeholder="Senha">
+          <input type="password" name="password" placeholder="Senha" required>
         </div>
 
         <div class="entrar">
@@ -124,9 +130,15 @@
         </div>
       </form>
 
-    @if(error)
-  <p style="color: red; margin-top: 10px;">{{ error }}</p>
-   @endif
+      <!-- Mensagens de erro ou sucesso -->
+      @if(flashMessages.get('error'))
+        <p class="message" style="color: red;">{{ flashMessages.get('error') }}</p>
+      @endif
+
+      @if(flashMessages.get('success'))
+        <p class="message" style="color: aquamarine;">{{ flashMessages.get('success') }}</p>
+      @endif
+
     </div>
   </div>
 </body>

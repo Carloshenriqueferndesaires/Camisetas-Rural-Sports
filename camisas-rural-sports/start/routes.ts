@@ -1,54 +1,47 @@
- import router from '@adonisjs/core/services/router'
+import router from '@adonisjs/core/services/router'
 import { HttpContext } from '@adonisjs/core/http'
-
+import AuthController from '#controllers/auth_controller'
 
 // ==========================
-// LOGIN
+// PÁGINAS DE LOGIN E CADASTRO
 // ==========================
-router.get('/login', async ({ view }: HttpContext) => {
-  return view.render('login')
+router.get('/login', async ({ view, session }: HttpContext) => {
+  const error = session.flashMessages.get('error')
+  const success = session.flashMessages.get('success')
+  return view.render('login', { error, success })
 })
 
-router.post('/login', async ({ request, response, session }: HttpContext) => {
-  const email = request.input('email')
-  const password = request.input('password')
+router.get('/cadastro', async ({ view, session }: HttpContext) => {
+  const error = session.flashMessages.get('error')
+  const success = session.flashMessages.get('success')
+  return view.render('cadastro', { error, success })
+})
 
-  if (email === 'teste@teste.com' && password === '123456') {
-    return response.redirect('/teste')
+// ==========================
+// AÇÕES DE LOGIN / CADASTRO / LOGOUT
+// ==========================
+router.post('/register', [AuthController, 'register'])
+router.post('/login', [AuthController, 'login'])
+router.get('/logout', [AuthController, 'logout'])
+
+// ==========================
+// DASHBOARD (exemplo de área logada)
+// ==========================
+router.get('/teste', async ({ view, session, response }: HttpContext) => {
+  const user = session.get('user')
+
+  if (!user) {
+    session.flash('error', 'Você precisa estar logado para acessar esta página.')
+    return response.redirect('/login')
   }
 
-  session.flash('error', 'Credenciais inválidas')
-  return response.redirect('/login')
+  return view.render('teste', { user })
 })
 
 // ==========================
-// CADASTRO
+// HOME
 // ==========================
-router.get('/cadastro', async ({ view }: HttpContext) => {
-  return view.render('cadastro')
-})
-
-router.post('/cadastro', async ({ request, response, session }: HttpContext) => {
-  const name = request.input('name')
-  const email = request.input('email')
-  const password = request.input('password')
-  const confirmPassword = request.input('confirm_password')
-
-  if (password !== confirmPassword) {
-    session.flash('error', 'As senhas não coincidem')
-    return response.redirect('/cadastro')
-  }
-
-  session.flash('success', 'Conta criada com sucesso! Faça login.')
-  return response.redirect('/login')
-})
-
-// ==========================
-// DASHBOARD
-// ==========================
-// ==========================
-// DASHBOARD
-// ==========================
-router.get('/teste', async ({ view }: HttpContext) => {
-  return view.render('teste')
+router.get('/', async ({ view, session }: HttpContext) => {
+  const user = session.get('user')
+  return view.render('home', { user })
 })
