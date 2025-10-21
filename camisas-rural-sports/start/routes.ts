@@ -43,5 +43,5 @@ router.get('/teste', async ({ view, session, response }: HttpContext) => {
 // ==========================
 router.get('/', async ({ view, session }: HttpContext) => {
   const user = session.get('user')
-  return view.render('home', { user })
+  return view.render('index', { user })
 })
