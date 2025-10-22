@@ -323,8 +323,12 @@
     <div class="modal-content">
       <span class="close">&times;</span>
       <h2>Meu Perfil</h2>
+      <img id="userAvatar" src="/imagem/logo3.png" alt="Avatar" 
+         style="width:100px; height:100px; border-radius:50%; margin-bottom:10px;">
+    
       <p><strong>Nome:</strong> <span id="userName">Carregando...</span></p>
       <p><strong>Email:</strong> <span id="userEmail">Carregando...</span></p>
+             <p><strong>sexo:</strong> <span id="userSexo">Carregando...</span></p>
       <form method="GET" action="/logout">
         <button class="btn">Sair</button>
       </form>
@@ -337,6 +341,9 @@
     const closeBtn = document.querySelector('.close')
     const nameField = document.getElementById('userName')
     const emailField = document.getElementById('userEmail')
+    const sexoField = document.getElementById('userSexo')
+     const avatar = document.getElementById('userAvatar')
+   
 
     icon.addEventListener('click', async () => {
       try {
@@ -345,6 +352,7 @@
         const data = await res.json()
         nameField.textContent = data.name
         emailField.textContent = data.email
+        sexoField.textContent = data.sexo || 'Não informado' //
         modal.style.display = 'flex'
       } catch (err) {
         nameField.textContent = 'Visitante'
@@ -352,7 +360,6 @@
         modal.style.display = 'flex'
       }
     })
-
     closeBtn.addEventListener('click', () => modal.style.display = 'none')
     window.addEventListener('click', (e) => {
       if (e.target === modal) modal.style.display = 'none'

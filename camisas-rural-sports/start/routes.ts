@@ -28,6 +28,8 @@ router.get('api/profile', async ({ session, response }: HttpContext) => {
   return response.json({
     name: user.name,
     email: user.email,
+    sexo: user.sexo
+    
   })
 })
 
