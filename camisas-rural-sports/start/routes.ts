@@ -33,23 +33,37 @@ router.get('api/profile', async ({ session, response }: HttpContext) => {
   })
 })
 
-router.post('api/profile/update', async ({ request, session, response }: HttpContext) => {
+router.post('/api/profile/update', async ({ request, session, response }: HttpContext) => {
   const user = session.get('user')
 
   if (!user) {
-    return response.unauthorized({ error: 'Usuário não logado' })
+    return response.unauthorized({ success: false, message: 'Usuário não logado' })
   }
 
-  user.name = request.input('name')
-  user.email = request.input('email')
-  user.sexo = request.input('sexo')
+  const { name, email, sexo } = request.only(['name', 'email', 'sexo'])
+  const User = (await import('#models/user')).default
 
-  await user.save()
+  const dbUser = await User.find(user.id)
+  if (!dbUser) {
+    return response.notFound({ success: false, message: 'Usuário não encontrado' })
+  }
 
-  session.put('user', user)
+  dbUser.name = name
+  dbUser.email = email
+  dbUser.sexo = sexo
+  await dbUser.save()
 
-  return response.json({ success: true, message: 'Perfil atualizado com sucesso!' })
+  
+  session.put('user', {
+    id: dbUser.id,
+    name: dbUser.name,
+    email: dbUser.email,
+    sexo: dbUser.sexo,
+  })
+
+  return response.json({ success: true })
 })
+
 
 router.get('/teste', async ({ view, session, response }: HttpContext) => {
   const user = session.get('user')
