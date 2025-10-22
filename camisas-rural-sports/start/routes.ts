@@ -17,7 +17,7 @@ router.get('/cadastro', async ({ view, session }: HttpContext) => {
 
 router.post('/register', [AuthController, 'register'])
 router.post('/login', [AuthController, 'login'])
-router.get('/logout', [AuthController, 'logout'])
+router.post('/logout', [AuthController, 'logout'])
 
 
 router.get('api/profile', async ({ session, response }: HttpContext) => {
@@ -31,6 +31,24 @@ router.get('api/profile', async ({ session, response }: HttpContext) => {
     sexo: user.sexo
     
   })
+})
+
+router.post('api/profile/update', async ({ request, session, response }: HttpContext) => {
+  const user = session.get('user')
+
+  if (!user) {
+    return response.unauthorized({ error: 'Usuário não logado' })
+  }
+
+  user.name = request.input('name')
+  user.email = request.input('email')
+  user.sexo = request.input('sexo')
+
+  await user.save()
+
+  session.put('user', user)
+
+  return response.json({ success: true, message: 'Perfil atualizado com sucesso!' })
 })
 
 router.get('/teste', async ({ view, session, response }: HttpContext) => {
