@@ -25,7 +25,21 @@ router.post('/login', [AuthController, 'login'])
 router.get('/logout', [AuthController, 'logout'])
 
 // ==========================
-// DASHBOARD (exemplo de área logada)
+// PERFIL DO USUÁRIO
+// ==========================
+router.get('/profile', async ({ view, session, response }: HttpContext) => {
+  const user = session.get('user')
+
+  if (!user) {
+    session.flash('error', 'Você precisa estar logado para acessar o perfil.')
+    return response.redirect('/login')
+  }
+
+  return view.render('profile', { user })
+})
+
+// ==========================
+// DASHBOARD / TESTE
 // ==========================
 router.get('/teste', async ({ view, session, response }: HttpContext) => {
   const user = session.get('user')
