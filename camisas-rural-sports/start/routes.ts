@@ -2,9 +2,6 @@ import router from '@adonisjs/core/services/router'
 import { HttpContext } from '@adonisjs/core/http'
 import AuthController from '#controllers/auth_controller'
 
-// ==========================
-// PÁGINAS DE LOGIN E CADASTRO
-// ==========================
 router.get('/login', async ({ view, session }: HttpContext) => {
   const error = session.flashMessages.get('error')
   const success = session.flashMessages.get('success')
@@ -17,30 +14,23 @@ router.get('/cadastro', async ({ view, session }: HttpContext) => {
   return view.render('cadastro', { error, success })
 })
 
-// ==========================
-// AÇÕES DE LOGIN / CADASTRO / LOGOUT
-// ==========================
+
 router.post('/register', [AuthController, 'register'])
 router.post('/login', [AuthController, 'login'])
 router.get('/logout', [AuthController, 'logout'])
 
-// ==========================
-// PERFIL DO USUÁRIO
-// ==========================
-router.get('/profile', async ({ view, session, response }: HttpContext) => {
+
+router.get('api/profile', async ({ session, response }: HttpContext) => {
   const user = session.get('user')
-
   if (!user) {
-    session.flash('error', 'Você precisa estar logado para acessar o perfil.')
-    return response.redirect('/login')
+    return response.unauthorized({ error: 'Usuário não logado' })
   }
-
-  return view.render('profile', { user })
+  return response.json({
+    name: user.name,
+    email: user.email,
+  })
 })
 
-// ==========================
-// DASHBOARD / TESTE
-// ==========================
 router.get('/teste', async ({ view, session, response }: HttpContext) => {
   const user = session.get('user')
 
@@ -52,9 +42,6 @@ router.get('/teste', async ({ view, session, response }: HttpContext) => {
   return view.render('teste', { user })
 })
 
-// ==========================
-// HOME
-// ==========================
 router.get('/', async ({ view, session }: HttpContext) => {
   const user = session.get('user')
   return view.render('index', { user })
