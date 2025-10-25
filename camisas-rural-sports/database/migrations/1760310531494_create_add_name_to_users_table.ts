@@ -5,7 +5,7 @@ export default class AddNameToUsers extends BaseSchema {
 
   public async up() {
     this.schema.alterTable(this.tableName, (table) => {
-      table.string('name').notNullable().defaultTo('') // adiciona coluna name
+      table.string('name').notNullable().defaultTo('') 
     })
   }
 

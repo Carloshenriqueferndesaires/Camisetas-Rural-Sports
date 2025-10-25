@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Cadastrar Produto</title>
+  <style>
+    body {
+      background-color: #0f0c25;
+      color: #fff;
+      font-family: 'Roboto', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    form {
+      background: #14122b;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 0 15px rgba(0,255,191,0.08);
+      width: 350px;
+    }
+    input, textarea {
+      width: 100%;
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 10px;
+      border: none;
+      background: #1e1c2e;
+      color: #b6b6b6;
+    }
+    button {
+      background: aquamarine;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 25px;
+      font-weight: bold;
+      cursor: pointer;
+      color: #141414;
+    }
+  </style>
+</head>
+<body>
+  <form method="POST" action="/produtos">
+    <h2>Cadastrar Produto</h2>
+    <input type="text" name="name" placeholder="Nome do produto" required>
+    <textarea name="description" placeholder="Descrição" required></textarea>
+    <input type="number" step="0.01" name="price" placeholder="Preço" required>
+    <input type="text" name="image_url" placeholder="URL da imagem">
+    <button type="submit">Cadastrar</button>
+
+    @if(flashMessages.get('success'))
+      <p style="color:aquamarine">{{ flashMessages.get('success') }}</p>
+    @endif
+  </form>
+</body>
+</html>
