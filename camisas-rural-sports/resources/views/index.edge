@@ -162,53 +162,57 @@
       display: none;
     }
 
+    /* ===== CORRIGIDO: Layout dos produtos ===== */
     .product {
-      height: 370px;
       width: 250px;
-      background-color: #1011;
-      position: relative;
-      box-shadow: 0 5px 10px rgba(17, 0, 17, 0.3);
+      background-color: #f1f1f1;
+      border-radius: 8px;
+      box-shadow: 0 5px 10px rgba(17, 0, 17, 0.2);
       display: inline-block;
       margin-right: 20px;
+      overflow: hidden;
+      vertical-align: top;
+      text-align: center;
+      transition: transform 0.2s ease;
+    }
+
+    .product:hover {
+      transform: scale(1.03);
     }
 
     .product img {
-      height: 100%;
       width: 100%;
-      object-fit: contain;
-      position: absolute;
-      bottom: 20%;
+      height: 260px;
+      object-fit: cover;
+      display: block;
+      border-bottom: 1px solid #ccc;
     }
 
     .product h4 {
       font-size: 18px;
       text-transform: capitalize;
-      position: absolute;
-      bottom: 28%;
+      font-weight: bold;
+      margin: 10px 0 5px 0;
+      color: #000;
     }
 
-    .catagory {
-      position: absolute;
-      bottom: 20%;
-      font-weight: 500;
-      text-transform: capitalize;
+   .product p.catagory {
+  font-size: 14px;
+  color: #333;
+  margin: 0 10px 8px 10px;
+  white-space: normal;        
+  word-wrap: break-word;      
+  overflow: visible;          
+  height: auto;              
+  display: block;             
+}
+    .product p.price {
+      font-weight: bold;
+      color: #000;
+      margin-bottom: 15px;
     }
 
-    .color {
-      position: absolute;
-      bottom: 15%;
-      font-weight: 500;
-      text-transform: capitalize;
-    }
-
-    .price {
-      font: 18px;
-      position: absolute;
-      bottom: 5%;
-      font-weight: 600;
-      text-transform: capitalize;
-    }
-
+    /* Modal */
     .modal {
       display: none;
       position: fixed;
@@ -245,71 +249,72 @@
     .close:hover {
       color: #2c7a7b;
     }
+
     input[readonly] {
-  border: none;
-  background: transparent;
-  color: #fff;
-  width: 80%;
-  text-align: center;
-  font-size: 15px;
-}
+      border: none;
+      background: transparent;
+      color: #fff;
+      width: 80%;
+      text-align: center;
+      font-size: 15px;
+    }
 
-input {
-  background-color: #1e1c2e;
-  color: #fff;
-  border-radius: 10px;
-  padding: 5px;
-  border: 1px solid transparent;
-  text-align: center;
-  transition: all 0.3s;
-}
+    input {
+      background-color: #1e1c2e;
+      color: #fff;
+      border-radius: 10px;
+      padding: 5px;
+      border: 1px solid transparent;
+      text-align: center;
+      transition: all 0.3s;
+    }
 
-input:focus {
-  outline: none;
-  border-color: aquamarine;
-}
+    input:focus {
+      outline: none;
+      border-color: aquamarine;
+    }
 
-.btn-edit, .btn-logout {
-  display: inline-block;
-  background-color: aquamarine;
-  color: #141414;
-  border: none;
-  padding: 10px 25px;
-  border-radius: 25px;
-  cursor: pointer;
-  font-weight: bold;
-  margin-top: 10px;
-  transition: 0.3s;
-}
-.btn-edit:hover, .btn-logout:hover {
-  background-color: rgb(0, 230, 170);
-  transform: scale(1.05);
-}
-.modal-content p {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 10px 0;
-}
+    .btn-edit, .btn-logout {
+      display: inline-block;
+      background-color: aquamarine;
+      color: #141414;
+      border: none;
+      padding: 10px 25px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-top: 10px;
+      transition: 0.3s;
+    }
 
-.modal-content p strong {
-  display: block;
-  margin-bottom: 5px;
-}
+    .btn-edit:hover, .btn-logout:hover {
+      background-color: rgb(0, 230, 170);
+      transform: scale(1.05);
+    }
 
-.modal-content input {
-  width: 90%;
-  max-width: 250px;
-  background-color: #1e1c2e;
-  color: #fff;
-  border-radius: 10px;
-  padding: 6px;
-  border: 1px solid transparent;
-  text-align: center;
-  transition: all 0.3s;
-}
+    .modal-content p {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 10px 0;
+    }
 
+    .modal-content p strong {
+      display: block;
+      margin-bottom: 5px;
+    }
 
+    .modal-content input {
+      width: 90%;
+      max-width: 250px;
+      background-color: #1e1c2e;
+      color: #fff;
+      border-radius: 10px;
+      padding: 6px;
+      border: 1px solid transparent;
+      text-align: center;
+      transition: all 0.3s;
+    }
   </style>
 </head>
 
@@ -340,62 +345,45 @@ input:focus {
         <h5>Explore nossos produtos</h5>
         <h1>Camisetas Esportivas da Rural Sports</h1>
         <p>Aproveite nossas ofertas e compre nossos produtos para renovar sua motivação</p>
-    <button class="btn">Compre Agora</button>
-<button onclick="window.location.href='/produtos/novo'" class="btn">Cadastrar Produto</button>
-
-</button>
-
+        <button class="btn">Compre Agora</button>
+        <button onclick="window.location.href='/produtos/novo'" class="btn">Cadastrar Produto</button>
       </div>
 
       <div class="content-right">
-  
-  @each(product in products)
-    <div class="product">
-      @if(product.imageUrl)
-        <img src="{{ product.imageUrl }}" alt="Imagem do produto">
-      @endif
-
-      <h4>{{ product.name }}</h4>
-      <p class="catagory">{{ product.description }}</p>
-      <p class="price">R$ {{ product.price }}</p>
-    </div>
-  @endeach
-</div>
-
-
-  
-  <div id="profileModal" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <h2>Meu Perfil</h2>
-    <img id="userAvatar" src="/imagem/logo3.png" alt="Avatar" 
-      style="width:100px; height:100px; border-radius:50%; margin-bottom:10px;">
-
-    <p><strong>Nome:</strong>
-      <input type="text" id="userName" value="Carregando..." readonly>
-    </p>
-    <p><strong>Email:</strong>
-      <input type="email" id="userEmail" value="Carregando..." readonly>
-    </p>
-    <p><strong>Sexo:</strong>
-      <input type="text" id="userSexo" value="Carregando..." readonly>
-    </p>
-
-    <!-- Botões -->
-    <div class="buttons">
-      <button id="editBtn" class="btn-edit">Editar</button>
-      <button id="saveBtn" class="btn-edit" style="display:none;">Salvar</button>
-      <button id="cancelBtn" class="btn-logout" style="display:none;">Cancelar</button>
-
-      <!-- logout agora com método POST -->
-      <form method="POST" action="/logout" style="margin-top:10px;">
-        <button type="submit" class="btn-logout">Sair</button>
-      </form>
+        @each(product in products)
+          <div class="product">
+            @if(product.imageUrl)
+              <img src="{{ product.imageUrl }}" alt="Imagem do produto">
+            @endif
+            <h4>{{ product.name }}</h4>
+            <p class="catagory">{{ product.description }}</p>
+            <p class="price">R$ {{ product.price }}</p>
+          </div>
+        @endeach
+      </div>
     </div>
   </div>
-</div>
 
-
+  <!-- MODAL PERFIL -->
+  <div id="profileModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Meu Perfil</h2>
+      <img id="userAvatar" src="/imagem/logo3.png" alt="Avatar"
+        style="width:100px; height:100px; border-radius:50%; margin-bottom:10px;">
+      <p><strong>Nome:</strong><input type="text" id="userName" value="Carregando..." readonly></p>
+      <p><strong>Email:</strong><input type="email" id="userEmail" value="Carregando..." readonly></p>
+      <p><strong>Sexo:</strong><input type="text" id="userSexo" value="Carregando..." readonly></p>
+      <div class="buttons">
+        <button id="editBtn" class="btn-edit">Editar</button>
+        <button id="saveBtn" class="btn-edit" style="display:none;">Salvar</button>
+        <button id="cancelBtn" class="btn-logout" style="display:none;">Cancelar</button>
+        <form method="POST" action="/logout" style="margin-top:10px;">
+          <button type="submit" class="btn-logout">Sair</button>
+        </form>
+      </div>
+    </div>
+  </div>
 
   <script>
     const modal = document.getElementById('profileModal')
@@ -404,8 +392,6 @@ input:focus {
     const nameField = document.getElementById('userName')
     const emailField = document.getElementById('userEmail')
     const sexoField = document.getElementById('userSexo')
-     const avatar = document.getElementById('userAvatar')
-   
 
     icon.addEventListener('click', async () => {
       try {
@@ -415,72 +401,13 @@ input:focus {
         nameField.value = data.name
         emailField.value = data.email
         sexoField.value = data.sexo || 'Não informado'
-
         modal.style.display = 'flex'
       } catch (err) {
-        nameField.textContent = 'Visitante'
-        emailField.textContent = 'Não logado'
         modal.style.display = 'flex'
       }
     })
     closeBtn.addEventListener('click', () => modal.style.display = 'none')
-    window.addEventListener('click', (e) => {
-      if (e.target === modal) modal.style.display = 'none'
-    })
-    const editBtn = document.getElementById('editBtn')
-const saveBtn = document.getElementById('saveBtn')
-const cancelBtn = document.getElementById('cancelBtn')
-
-editBtn.addEventListener('click', () => {
-  document.querySelectorAll('#userName, #userEmail, #userSexo').forEach(el => {
-    el.removeAttribute('readonly')
-    el.style.backgroundColor = '#1e1c2e'
-  })
-  editBtn.style.display = 'none'
-  saveBtn.style.display = 'inline-block'
-  cancelBtn.style.display = 'inline-block'
-})
-
-cancelBtn.addEventListener('click', () => {
-  document.querySelectorAll('#userName, #userEmail, #userSexo').forEach(el => {
-    el.setAttribute('readonly', true)
-    el.style.backgroundColor = 'transparent'
-  })
-  saveBtn.style.display = 'none'
-  cancelBtn.style.display = 'none'
-  editBtn.style.display = 'inline-block'
-})
-
-saveBtn.addEventListener('click', async () => {
-  const payload = {
-    name: document.getElementById('userName').value,
-    email: document.getElementById('userEmail').value,
-    sexo: document.getElementById('userSexo').value
-  }
-
-  const res = await fetch('/api/profile/update', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
-  })
-
-  const data = await res.json()
-
-  if (data.success) {
-    alert('✅ Perfil atualizado com sucesso!')
-  } else {
-    alert('❌ Erro ao atualizar perfil!')
-  }
-
-  document.querySelectorAll('#userName, #userEmail, #userSexo').forEach(el => {
-    el.setAttribute('readonly', true)
-    el.style.backgroundColor = 'transparent'
-  })
-  saveBtn.style.display = 'none'
-  cancelBtn.style.display = 'none'
-  editBtn.style.display = 'inline-block'
-})
-
+    window.addEventListener('click', e => { if (e.target === modal) modal.style.display = 'none' })
   </script>
 </body>
 </html>
