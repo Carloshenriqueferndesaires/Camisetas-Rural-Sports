@@ -89,4 +89,5 @@ router.post('/produtos', [ProductsController, 'store'])
 router.get('/produtos/:id/editar', [ProductsController, 'edit'])
 router.post('/produtos/:id', [ProductsController, 'update'])
 router.post('/produtos/:id/deletar', [ProductsController, 'destroy'])
+router.get('/produtos/:id', [ProductsController, 'show'])
 

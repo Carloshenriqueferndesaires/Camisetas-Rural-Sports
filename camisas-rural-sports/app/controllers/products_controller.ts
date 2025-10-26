@@ -46,6 +46,12 @@ export default class ProductsController {
     session.flash('success', 'Produto excluído com sucesso!')
     return response.redirect('/produtos')
   }
+// 
+  public async show({ params, view }: HttpContext) {
+  const product = await Product.findOrFail(params.id)
+  return view.render('detalhe_produto', { product })
+}
+
 }
 
 

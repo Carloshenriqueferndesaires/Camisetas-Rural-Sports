@@ -139,7 +139,7 @@
         <h3>{{ product.name }}</h3>
         <p>{{ product.description }}</p>
         <span>R$ {{ product.price }}</span>
-
+        <a href="/produtos/{{ product.id }}" class="btn">Ver Detalhes</a>
         <form action="/produtos/{{ product.id }}/editar" method="GET">
           <button type="submit" class="btn">Editar</button>
         </form>
