@@ -162,31 +162,39 @@
       display: none;
     }
 
-    /* ===== CORRIGIDO: Layout dos produtos ===== */
-    .product {
-      width: 250px;
-      background-color: #f1f1f1;
-      border-radius: 8px;
-      box-shadow: 0 5px 10px rgba(17, 0, 17, 0.2);
-      display: inline-block;
-      margin-right: 20px;
-      overflow: hidden;
-      vertical-align: top;
-      text-align: center;
-      transition: transform 0.2s ease;
-    }
+    
+.product {
+  width: 250px;
+  background-color: #f1f1f1;
+  border-radius: 12px;
+  box-shadow: 0 5px 10px rgba(17, 0, 17, 0.15);
+  display: inline-block;
+  margin-right: 20px;
+  overflow: hidden;
+  vertical-align: top;
+  text-align: center;
+  transition: all 0.35s ease; 
+}
 
-    .product:hover {
-      transform: scale(1.03);
-    }
+.product:hover {
+  transform: scale(1.08); 
+  box-shadow: 0 10px 25px rgba(0, 255, 191, 0.3); 
+  background-color: #e8fef9;
+}
 
-    .product img {
-      width: 100%;
-      height: 260px;
-      object-fit: cover;
-      display: block;
-      border-bottom: 1px solid #ccc;
-    }
+.product img {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  display: block;
+  border-bottom: 1px solid #ccc;
+  transition: transform 0.4s ease; 
+}
+
+.product:hover img {
+  transform: scale(1.05); 
+}
+
 
     .product h4 {
       font-size: 18px;

@@ -2,6 +2,7 @@ import type { HttpContext } from '@adonisjs/core/http'
 import User from '#models/user'
 import Hash from '@adonisjs/core/services/hash'
 
+
 export default class AuthController {
   // ===== Login =====
   public async login({ request, response, session }: HttpContext) {
@@ -19,7 +20,6 @@ export default class AuthController {
       return response.redirect('/login')
     }
 
-    // ✅ Salva o usuário na sessão
     session.put('user', {
       id: user.id,
       name: user.name,
@@ -31,7 +31,6 @@ export default class AuthController {
     return response.redirect('/')
   }
 
-  // ===== Cadastro =====
   public async register({ request, response, session }: HttpContext) {
     const { name, email, password, sexo } = request.only(['name', 'email', 'password', 'sexo'])
     const existingUser = await User.findBy('email', email)
@@ -51,9 +50,8 @@ export default class AuthController {
     return response.redirect('/login')
   }
 
-  // ===== Logout =====
   public async logout({ session, response }: HttpContext) {
-    // ✅ Remove os dados da sessão corretamente
+    
     session.forget('user')
     session.flash('success', 'Você saiu com sucesso.')
     return response.redirect('/login')
