@@ -3,6 +3,7 @@ import { HttpContext } from '@adonisjs/core/http'
 import AuthController from '#controllers/auth_controller'
 import ProductsController from '#controllers/products_controller'
 
+
 router.get('/login', async ({ view, session }: HttpContext) => {
   const error = session.flashMessages.get('error')
   const success = session.flashMessages.get('success')
@@ -82,7 +83,10 @@ router.get('/', async ({ view, session }: HttpContext) => {
   return view.render('index', { user })
 })
 
-//===== Rotas de Produtos =====
 router.get('/produtos', [ProductsController, 'index'])
 router.get('/produtos/novo', [ProductsController, 'create'])
 router.post('/produtos', [ProductsController, 'store'])
+router.get('/produtos/:id/editar', [ProductsController, 'edit'])
+router.post('/produtos/:id', [ProductsController, 'update'])
+router.post('/produtos/:id/deletar', [ProductsController, 'destroy'])
+
