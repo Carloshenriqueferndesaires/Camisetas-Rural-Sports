@@ -418,4 +418,66 @@
     window.addEventListener('click', e => { if (e.target === modal) modal.style.display = 'none' })
   </script>
 </body>
+  <script>
+    // --- Script para editar o perfil ---
+    const editBtn = document.getElementById('editBtn')
+    const saveBtn = document.getElementById('saveBtn')
+    const cancelBtn = document.getElementById('cancelBtn')
+
+    editBtn.addEventListener('click', () => {
+      document.querySelectorAll('#userName, #userEmail, #userSexo').forEach(el => {
+        el.removeAttribute('readonly')
+        el.style.backgroundColor = '#1e1c2e'
+      })
+      editBtn.style.display = 'none'
+      saveBtn.style.display = 'inline-block'
+      cancelBtn.style.display = 'inline-block'
+    })
+
+    cancelBtn.addEventListener('click', () => {
+      document.querySelectorAll('#userName, #userEmail, #userSexo').forEach(el => {
+        el.setAttribute('readonly', true)
+        el.style.backgroundColor = 'transparent'
+      })
+      saveBtn.style.display = 'none'
+      cancelBtn.style.display = 'none'
+      editBtn.style.display = 'inline-block'
+    })
+
+    saveBtn.addEventListener('click', async () => {
+      const payload = {
+        name: document.getElementById('userName').value,
+        email: document.getElementById('userEmail').value,
+        sexo: document.getElementById('userSexo').value
+      }
+
+      try {
+        const res = await fetch('/api/profile/update', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include', // 🔑 mantém a sessão ativa
+          body: JSON.stringify(payload)
+        })
+        const data = await res.json()
+
+        if (data.success) {
+          alert('✅ Perfil atualizado com sucesso!')
+        } else {
+          alert('❌ Erro ao atualizar perfil!')
+        }
+      } catch (err) {
+        alert('❌ Erro de conexão!')
+        console.error(err)
+      }
+
+      document.querySelectorAll('#userName, #userEmail, #userSexo').forEach(el => {
+        el.setAttribute('readonly', true)
+        el.style.backgroundColor = 'transparent'
+      })
+      saveBtn.style.display = 'none'
+      cancelBtn.style.display = 'none'
+      editBtn.style.display = 'inline-block'
+    })
+  </script>
+
 </html>

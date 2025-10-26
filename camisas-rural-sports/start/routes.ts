@@ -79,14 +79,11 @@ router.get('/teste', async ({ view, session, response }: HttpContext) => {
   return view.render('teste', { user })
 })
 
-//router.get('/', async ({ view, session }: HttpContext) => {
-  //const user = session.get('user')
-  //return view.render('index', { user })
-//})
+
 router.get('/', async ({ view, session }: HttpContext) => {
   const user = session.get('user')
-  const products = await Product.all() // <-- busca todos os produtos do banco
-  return view.render('index', { user, products }) // <-- envia produtos para o front
+  const products = await Product.all() 
+  return view.render('index', { user, products }) 
 })
 
 router.get('/produtos', [ProductsController, 'index'])
