@@ -2,6 +2,7 @@ import router from '@adonisjs/core/services/router'
 import { HttpContext } from '@adonisjs/core/http'
 import AuthController from '#controllers/auth_controller'
 import ProductsController from '#controllers/products_controller'
+import Product from '#models/product'
 
 
 router.get('/login', async ({ view, session }: HttpContext) => {
@@ -78,9 +79,14 @@ router.get('/teste', async ({ view, session, response }: HttpContext) => {
   return view.render('teste', { user })
 })
 
+//router.get('/', async ({ view, session }: HttpContext) => {
+  //const user = session.get('user')
+  //return view.render('index', { user })
+//})
 router.get('/', async ({ view, session }: HttpContext) => {
   const user = session.get('user')
-  return view.render('index', { user })
+  const products = await Product.all() // <-- busca todos os produtos do banco
+  return view.render('index', { user, products }) // <-- envia produtos para o front
 })
 
 router.get('/produtos', [ProductsController, 'index'])

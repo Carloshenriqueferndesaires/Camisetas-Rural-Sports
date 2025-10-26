@@ -348,44 +348,20 @@ input:focus {
       </div>
 
       <div class="content-right">
-                <div class="product">
-                    <img src="images/air-max-1-lx-shoes.png" alt="nike shoes">
-                    <h4>Nike Air max 1</h4>
-                    <p class="catagory">Men's shoes</p>
-                    <p class="color">Color: white</p>
-                    <p class="price">₹ 14 995</p>
-                </div>
-                <div class="product">
-                    <img src="images/air-peg-2k5-shoes.png" alt="nike shoes">
-                    <h4>Nike Air peg 2K5</h4>
-                    <p class="catagory">Men's shoes</p>
-                    <p class="color">Color: white</p>
-                    <p class="price">₹ 13 995</p>
-                </div>
-                <div class="product">
-                    <img src="images/lunar-roam-shoes.png" alt="nike shoes">
-                    <h4>Nike lunar roam</h4>
-                    <p class="catagory">Men's shoes</p>
-                    <p class="color">Color: sleepy blue</p>
-                    <p class="price">₹ 15 995</p>
-                </div>
-                <div class="product">
-                    <img src="images/nocta-glide-shoes.png" alt="nike shoes">
-                    <h4>Nike nocta glide</h4>
-                    <p class="catagory">Men's shoes</p>
-                    <p class="color">Color: white</p>
-                    <p class="price">₹ 12 995</p>
-                </div>
-                <div class="product">
-                    <img src="images/terminator-high-shoes.png" alt="nike shoes">
-                    <h4>Nike Terminator high</h4>
-                    <p class="catagory">Men's shoes</p>
-                    <p class="color">Color: sleepy blue</p>
-                    <p class="price">₹ 15 995</p>
-                </div>
-            </div>
-        </div>
+  
+  @each(product in products)
+    <div class="product">
+      @if(product.imageUrl)
+        <img src="{{ product.imageUrl }}" alt="Imagem do produto">
+      @endif
+
+      <h4>{{ product.name }}</h4>
+      <p class="catagory">{{ product.description }}</p>
+      <p class="price">R$ {{ product.price }}</p>
     </div>
+  @endeach
+</div>
+
 
   
   <div id="profileModal" class="modal">
