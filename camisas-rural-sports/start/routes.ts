@@ -118,3 +118,6 @@ router.post('/produtos/:id', [ProductsController, 'update'])
 router.post('/produtos/:id/deletar', [ProductsController, 'destroy'])
 router.get('/produtos/:id', [ProductsController, 'show'])
 
+router.get('/homem', async ({ view }: HttpContext) => {
+  return view.render('homem')
+})

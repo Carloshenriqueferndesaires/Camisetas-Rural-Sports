@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rural Sports - Masculino</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-color: #d0d4d5;
+      font-family: "Inter", sans-serif;
+      margin: 0;
+      padding: 0;
+      color: #000;
+    }
+
+    .nav {
+      height: 110px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 50px;
+      background-color: #d0d4d5;
+    }
+
+    .nav img {
+      height: 80px;
+      width: auto;
+      cursor: pointer;
+    }
+
+    .nav ul {
+      display: flex;
+      list-style: none;
+      gap: 40px;
+    }
+
+    .nav ul li a {
+      text-decoration: none;
+      font-weight: 600;
+      color: #000;
+      text-transform: uppercase;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+
+    .nav ul li a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -5px;
+      height: 2px;
+      width: 0;
+      background-color: #2c7a7b;
+      transition: width 0.3s ease;
+    }
+
+    .nav ul li a:hover {
+      color: #2c7a7b;
+    }
+
+    .nav ul li a:hover::after {
+      width: 100%;
+    }
+
+    .content {
+      padding: 60px 100px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .content-left {
+      width: 40%;
+    }
+
+    .content-left h5 {
+      font-size: 20px;
+      color: #555;
+      margin-bottom: 10px;
+    }
+
+    .content-left h1 {
+      font-size: 50px;
+      font-weight: 800;
+      text-transform: uppercase;
+      margin-bottom: 25px;
+    }
+
+    .content-left p {
+      font-size: 18px;
+      margin-bottom: 25px;
+      color: #333;
+    }
+
+    .btn {
+      background-color: #000;
+      color: #fff;
+      font-size: 15px;
+      padding: 12px 40px;
+      font-weight: 600;
+      border: none;
+      border-radius: 50px;
+      border-top-left-radius: 0;
+      transition: all 0.3s ease;
+      margin-right: 15px;
+    }
+
+    .btn:hover {
+      background-color: #2c7a7b;
+      transform: scale(1.05);
+      cursor: pointer;
+    }
+
+    .content-right {
+      width: 55%;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .product {
+      background-color: #f1f1f1;
+      border-radius: 12px;
+      box-shadow: 0 5px 10px rgba(17, 0, 17, 0.15);
+      text-align: center;
+      padding: 15px;
+      transition: transform 0.3s ease;
+    }
+
+    .product:hover {
+      transform: scale(1.05);
+    }
+
+    .product img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .product h3 {
+      margin: 10px 0 5px;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .product p {
+      color: #333;
+      font-size: 14px;
+    }
+
+    .product span {
+      color: #2c7a7b;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="nav">
+    <img src="/imagem/logo_pagina_inicial.png" alt="logo">
+    <ul>
+      <li><a href="/">Início</a></li>
+      <li><a href="/homem">Homem</a></li>
+      <li><a href="/mulher">Mulher</a></li>
+      <li><a href="/colecao">Coleção</a></li>
+      <li><a href="/contato">Contato</a></li>
+    </ul>
+  </div>
+
+  <div class="content">
+    <div class="content-left">
+      <h5>Explore nossa linha masculina</h5>
+      <h1>Camisetas Masculinas<br>Rural Sports</h1>
+      <p>Descubra conforto e estilo com as melhores camisas masculinas para o seu time favorito.</p>
+      <button onclick="window.location.href='/produtos'" class="btn">Ver Produtos</button>
+      <button onclick="window.location.href='/produtos/novo'" class="btn">Cadastrar Produto</button>
+    </div>
+
+    <div class="content-right">
+      @each(product in products)
+        @if(product.description.toLowerCase().includes('homem') || product.name.toLowerCase().includes('mascul'))
+          <div class="product">
+            @if(product.imageUrl)
+              <img src="{{ product.imageUrl }}" alt="Imagem do produto">
+            @endif
+            <h3>{{ product.name }}</h3>
+            <p>{{ product.description }}</p>
+            <span>R$ {{ product.price }}</span>
+          </div>
+        @endif
+      @endeach
+    </div>
+  </div>
+</body>
+</html>

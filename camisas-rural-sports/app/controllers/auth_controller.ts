@@ -4,18 +4,16 @@ import Hash from '@adonisjs/core/services/hash'
 import { schema, rules } from '@adonisjs/validator'
 
 export default class AuthController {
-  // ============================================================
-  // LOGIN COM VALIDAÇÃO
-  // ============================================================
+
   public async login({ request, response, session }: HttpContext) {
     try {
-      // 🔒 Validação dos campos de login
+      
       const loginSchema = schema.create({
         email: schema.string({}, [
-          rules.email(), // precisa ser um email válido
+          rules.email(), 
         ]),
         password: schema.string({}, [
-          rules.minLength(6), // precisa ter pelo menos 6 caracteres
+          rules.minLength(6), 
         ]),
       })
 
