@@ -121,3 +121,11 @@ router.get('/produtos/:id', [ProductsController, 'show'])
 router.get('/homem', async ({ view }: HttpContext) => {
   return view.render('homem')
 })
+
+router.get('/mulher', async ({ view }: HttpContext) => {
+  return view.render('mulher')
+})
+
+router.get('/contato', async ({ view }: HttpContext) => {
+  return view.render('contato')
+})
