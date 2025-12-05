@@ -4,6 +4,9 @@ import AuthController from '#controllers/auth_controller'
 import ProductsController from '#controllers/products_controller'
 import Product from '#models/product'
 import { schema, rules } from '@adonisjs/validator'
+import CartController from '#controllers/cart_controller'
+import CheckoutController from '#controllers/checkouts_controller'
+import { middleware } from '#start/kernel'
 
 router.get('/login', async ({ view, session }: HttpContext) => {
   const error = session.flashMessages.get('error')
@@ -129,3 +132,20 @@ router.get('/mulher', async ({ view }: HttpContext) => {
 router.get('/contato', async ({ view }: HttpContext) => {
   return view.render('contato')
 })
+
+
+router.get('/carrinho', [CartController, 'index'])
+router.post('/carrinho/adicionar/:id', [CartController, 'add'])
+router.post('/carrinho/remover/:id', [CartController, 'remove'])
+router.post('/carrinho/diminuir/:id', [CartController, 'decrement'])
+
+router.get('/comprar', [ProductsController, 'shop'])
+router.post('/checkout', [CheckoutController, 'finalize'])
+
+const OrdersController = () => import('#controllers/orders_controller')
+
+// ... outras rotas ...
+
+// 2. ADICIONE O .use(middleware.auth()) NO FINAL DESTA ROTA
+router.get('/meus-pedidos', [OrdersController, 'index'])
+    

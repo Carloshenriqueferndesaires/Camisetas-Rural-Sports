@@ -1,6 +1,7 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column } from '@adonisjs/lucid/orm'
 
+
 export default class Product extends BaseModel {
   @column({ isPrimary: true })
   public id!: number
@@ -16,6 +17,9 @@ export default class Product extends BaseModel {
 
   @column({ columnName: 'image_url' })
   public imageUrl!: string
+
+  @column()
+  declare quantity: number
 
   @column.dateTime({ autoCreate: true })
   public createdAt!: DateTime

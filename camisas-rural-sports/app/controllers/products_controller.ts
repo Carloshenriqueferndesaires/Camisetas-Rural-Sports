@@ -8,10 +8,8 @@ export default class ProductsController {
     return view.render('cadastro_produto')
   }
 
-
   public async store({ request, response, session }: HttpContext) {
     try {
-      
       const productSchema = schema.create({
         name: schema.string({}, [
           rules.minLength(1), 
@@ -19,13 +17,13 @@ export default class ProductsController {
         price: schema.number([
           rules.unsigned(), 
         ]),
+        quantity: schema.number([ rules.unsigned() ]),
         description: schema.string.optional({}, [
           rules.maxLength(500), 
         ]),
-       image_url: schema.string.optional({}, [
-       rules.regex(/^(https?:\/\/|\/|\.\/|\.{2}\/).+/),
-]),
-
+        image_url: schema.string.optional({}, [
+          rules.regex(/^(https?:\/\/|\/|\.\/|\.{2}\/).+/),
+        ]),
       })
 
       const data = await request.validate({ schema: productSchema })
@@ -41,18 +39,25 @@ export default class ProductsController {
     }
   }
 
- 
+  // Método existente (Lista Administrativa)
   public async index({ view }: HttpContext) {
     const products = await Product.all()
     return view.render('lista_produtos', { products })
   }
+
+  // ⬇️⬇️ ADICIONE ESTE BLOCO AQUI ⬇️⬇️
+  // Método novo (Vitrine de Compras para o Cliente)
+  public async shop({ view }: HttpContext) {
+    const products = await Product.all()
+    return view.render('loja', { products })
+  }
+  // ⬆️⬆️ FIM DO BLOCO NOVO ⬆️⬆️
 
   public async edit({ params, view }: HttpContext) {
     const product = await Product.findOrFail(params.id)
     return view.render('editar_produto', { product })
   }
 
- 
   public async update({ params, request, response, session }: HttpContext) {
     try {
       const productSchema = schema.create({
@@ -62,13 +67,13 @@ export default class ProductsController {
         price: schema.number([
           rules.unsigned(),
         ]),
+        quantity: schema.number([ rules.unsigned() ]),
         description: schema.string.optional({}, [
           rules.maxLength(500),
         ]),
         image_url: schema.string.optional({}, [
           rules.regex(/^(https?:\/\/|\/|\.\/|\.{2}\/).+/),
         ]),
-
       })
 
       const data = await request.validate({ schema: productSchema })
@@ -94,7 +99,6 @@ export default class ProductsController {
     return response.redirect('/produtos')
   }
 
-  
   public async show({ params, view }: HttpContext) {
     const product = await Product.findOrFail(params.id)
     return view.render('detalhe_produto', { product })

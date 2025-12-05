@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <title>Meus Pedidos | Rural Sports</title>
+  </head>
+<body>
+  <div class="container" style="max-width: 800px; margin: 40px auto; padding: 20px;">
+    <h1 style="color: aquamarine; text-align: center; margin-bottom: 30px;">Histórico de Compras</h1>
+
+    @each(order in orders)
+      <div style="background: #14122b; border-radius: 15px; padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
+        
+        <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #333; padding-bottom: 10px; margin-bottom: 10px;">
+          <span style="color: #b6b6b6;">Pedido #{{ order.id }}</span>
+          <span style="color: #b6b6b6;">{{ order.createdAt.toFormat('dd/MM/yyyy') }}</span>
+        </div>
+
+        <div style="margin-bottom: 15px;">
+          @each(item in order.items)
+            <div style="display: flex; justify-content: space-between; color: #fff; margin-bottom: 5px;">
+              <span>{{ item.quantity }}x {{ item.name }}</span>
+              <span>R$ {{ item.price }}</span>
+            </div>
+          @end
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #333; padding-top: 10px;">
+          <span style="color: aquamarine; font-weight: bold;">Status: {{ order.status }}</span>
+          <span style="color: #fff; font-size: 18px; font-weight: bold;">Total: R$ {{ order.total }}</span>
+        </div>
+
+      </div>
+    @else
+      <p style="text-align: center; color: #fff;">Você ainda não fez nenhuma compra.</p>
+    @end
+  </div>
+</body>
+</html>

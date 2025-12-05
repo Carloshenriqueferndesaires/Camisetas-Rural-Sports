@@ -37,21 +37,43 @@
       font-weight: bold;
       cursor: pointer;
       color: #141414;
+      width: 100%;
+    }
+    label {
+      font-size: 14px;
+      color: aquamarine;
+      margin-left: 5px;
     }
   </style>
 </head>
 <body>
   <form method="POST" action="/produtos/{{ product.id }}">
     <h2>Editar Produto</h2>
+    
+    <label>Nome:</label>
     <input type="text" name="name" value="{{ product.name }}" required>
+    
+    <label>Descrição:</label>
     <textarea name="description" required>{{ product.description }}</textarea>
+    
+    <label>Preço:</label>
     <input type="number" step="0.01" name="price" value="{{ product.price }}" required>
-    <input type="text" name="image_url" value="{{ product.imageUrl }}">
+    
+    <div style="margin: 10px 0;">
+        <label for="quantity">Quantidade em Estoque:</label>
+        <input type="number" name="quantity" id="quantity" value="{{ product.quantity || 0 }}" min="0" required>
+    </div>
+
+    <label>Imagem URL:</label>
+    <input type="text" name="image_url" value="{{ product.imageUrl || '' }}">
+    
     <button type="submit">Salvar Alterações</button>
 
     @if(flashMessages.get('success'))
-      <p style="color:aquamarine">{{ flashMessages.get('success') }}</p>
+      <p style="color:aquamarine; text-align: center; margin-top: 10px;">{{ flashMessages.get('success') }}</p>
     @endif
+    
+    <a href="/produtos" style="display:block; text-align:center; color: #fff; margin-top:15px; text-decoration: none; font-size: 14px;">Cancelar</a>
   </form>
 </body>
 </html>

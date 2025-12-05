@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rural Sports | Todos os Produtos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
+
+  <style>
+    body {
+      background-color: #0f0c25;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding-bottom: 50px;
+    }
+
+    /* Navbar igual ao padrão */
+    .nav {
+      height: 110px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 50px;
+      background-color: #d0d4d5; /* Mantendo nav clara ou escura conforme preferência, aqui seguindo o index */
+      color: #000;
+      margin-bottom: 40px;
+    }
+    .nav-part-1 { display: flex; align-items: center; }
+    .nav img { height: 80px; width: auto; margin-right: 60px; cursor: pointer; }
+    .nav-part-1 ul { display: flex; list-style: none; padding: 0; }
+    .nav-part-1 ul li { margin-right: 40px; font-size: 19px; font-weight: 500; text-transform: uppercase; }
+    .nav-part-1 ul li a { text-decoration: none; color: inherit; transition: color 0.3s ease; }
+    .nav-part-1 ul li a:hover { color: #2c7a7b; }
+    .nav-part-2 i { margin-right: 40px; font-size: 21px; cursor: pointer; color: #000; transition: all 0.3s; }
+    .nav-part-2 i:hover { color: #2c7a7b; transform: scale(1.2); }
+
+    /* Grid de Produtos */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    h1 {
+      color: aquamarine;
+      text-align: center;
+      margin-bottom: 40px;
+      font-size: 36px;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 30px;
+    }
+
+    .product-card {
+      background-color: #14122b;
+      border-radius: 20px;
+      padding: 20px;
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+      box-shadow: 0 0 10px rgba(0, 255, 191, 0.05);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 20px rgba(0, 255, 191, 0.2);
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 15px;
+      margin-bottom: 15px;
+      cursor: pointer;
+    }
+
+    .product-card h3 {
+      margin: 10px 0;
+      color: #fff;
+      font-size: 20px;
+    }
+
+    .product-card p {
+      color: #b6b6b6;
+      font-size: 14px;
+      margin-bottom: 15px;
+      height: 40px; /* Limita altura da descrição */
+      overflow: hidden;
+    }
+
+    .price {
+      display: block;
+      font-size: 22px;
+      color: aquamarine;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .btn-buy {
+      background-color: aquamarine;
+      color: #141414;
+      border: none;
+      padding: 12px 0;
+      width: 100%;
+      border-radius: 50px;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+      text-transform: uppercase;
+    }
+
+    .btn-buy:hover {
+      background-color: rgb(0, 230, 170);
+      transform: scale(1.02);
+    }
+
+    /* Link para detalhes na imagem */
+    .link-details {
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="nav">
+    <div class="nav-part-1">
+      <img src="/imagem/logo_pagina_inicial.png" alt="logo" onclick="window.location.href='/'" />
+      <ul>
+        <li><a href="/">Início</a></li>
+        <li><a href="/homem">Homem</a></li>
+        <li><a href="/mulher">Mulher</a></li>
+        <li><a href="/colecao">Coleção</a></li>
+        <li><a href="/contato">Contato</a></li>
+      </ul>
+    </div>
+    <div class="nav-part-2">
+      <i class="ri-user-line" onclick="window.location.href='/login'"></i>
+      <i class="ri-search-line"></i>
+      <i class="ri-shopping-cart-2-line" onclick="window.location.href='/carrinho'"></i>
+      <i class="ri-menu-line"></i>
+    </div>
+  </div>
+
+  <div class="container">
+    <h1>Nossos Produtos</h1>
+
+    <div class="products-grid">
+      @each(product in products)
+        <div class="product-card">
+          <a href="/produtos/{{ product.id }}" class="link-details">
+            <img src="{{ product.imageUrl || '/imagem/logo3.png' }}" alt="{{ product.name }}">
+          </a>
+          
+          <h3>{{ product.name }}</h3>
+          <p>{{ product.description }}</p>
+          <span class="price">R$ {{ product.price }}</span>
+
+          <form action="/carrinho/adicionar/{{ product.id }}" method="POST">
+            <button type="submit" class="btn-buy">
+              Comprar <i class="ri-shopping-bag-line"></i>
+            </button>
+          </form>
+        </div>
+      @endeach
+    </div>
+  </div>
+
+</body>
+</html>

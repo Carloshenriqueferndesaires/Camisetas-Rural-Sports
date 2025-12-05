@@ -5,22 +5,16 @@ import { schema, rules } from '@adonisjs/validator'
 
 export default class AuthController {
 
-  public async login({ request, response, session }: HttpContext) {
+  // Adicione 'auth' aqui nos parâmetros
+  public async login({ request, response, session, auth }: HttpContext) {
     try {
-      
       const loginSchema = schema.create({
-        email: schema.string({}, [
-          rules.email(), 
-        ]),
-        password: schema.string({}, [
-          rules.minLength(6), 
-        ]),
+        email: schema.string({}, [ rules.email() ]),
+        password: schema.string({}, [ rules.minLength(6) ]),
       })
 
-      
       const { email, password } = await request.validate({ schema: loginSchema })
 
-      
       const user = await User.findBy('email', email)
       if (!user) {
         session.flash('error', 'Usuário não encontrado.')
@@ -33,16 +27,22 @@ export default class AuthController {
         return response.redirect('/login')
       }
 
-      
+      // --- A MÁGICA ACONTECE AQUI ---
+      // 1. Login Oficial (Para o Middleware e auth.user funcionarem)
+      await auth.use('web').login(user)
+
+      // 2. Mantive sua sessão manual para não quebrar seu código antigo (carrinho, perfil, etc)
       session.put('user', {
         id: user.id,
         name: user.name,
         email: user.email,
         sexo: user.sexo,
       })
+      // -----------------------------
 
       session.flash('success', `Bem-vindo, ${user.name}!`)
       return response.redirect('/')
+      
     } catch (error) {
       console.error('Erro de validação no login:', error.messages)
       session.flash('error', 'Verifique o email e a senha e tente novamente.')
@@ -50,20 +50,12 @@ export default class AuthController {
     }
   }
 
-  
   public async register({ request, response, session }: HttpContext) {
     try {
       const userSchema = schema.create({
-        name: schema.string({}, [
-          rules.minLength(3),
-          rules.maxLength(50),
-        ]),
-        email: schema.string({}, [
-          rules.email(),
-        ]),
-        password: schema.string({}, [
-          rules.minLength(6),
-        ]),
+        name: schema.string({}, [ rules.minLength(3), rules.maxLength(50) ]),
+        email: schema.string({}, [ rules.email() ]),
+        password: schema.string({}, [ rules.minLength(6) ]),
         sexo: schema.enum(['Masculino', 'Feminino'] as const),
       })
 
@@ -86,8 +78,14 @@ export default class AuthController {
     }
   }
 
-  public async logout({ session, response }: HttpContext) {
+  // Adicione 'auth' aqui também
+  public async logout({ session, response, auth }: HttpContext) {
+    // Logout Oficial
+    await auth.use('web').logout()
+    
+    // Limpeza Manual
     session.forget('user')
+    
     session.flash('success', 'Você saiu com sucesso.')
     return response.redirect('/login')
   }
