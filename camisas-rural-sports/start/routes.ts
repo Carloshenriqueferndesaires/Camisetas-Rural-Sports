@@ -26,13 +26,17 @@ router.post('/login', [AuthController, 'login'])
 router.post('/logout', [AuthController, 'logout'])
 
 
-router.get('/api/profile', async ({ session, response }: HttpContext) => {
-  const user = session.get('user')
+router.get('/api/profile', async ({ auth, response }: HttpContext) => {
+  // 1. Verifica se está logado pelo sistema oficial
+  await auth.check()
+  const user = auth.user
 
+  // 2. Se não tiver usuário, retorna erro (o script do modal vai pegar isso e mandar pro login)
   if (!user) {
     return response.unauthorized({ error: 'Usuário não logado' })
   }
 
+  // 3. Retorna os dados oficiais
   return response.json({
     name: user.name,
     email: user.email,
